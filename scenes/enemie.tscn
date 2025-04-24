@@ -1,0 +1,90 @@
+[gd_scene load_steps=7 format=3 uid="uid://b1yb7388c3kr8"]
+
+[ext_resource type="Texture2D" uid="uid://bp6k6f40hearc" path="res://Assets/Enemies/Turtle/Idle 2 (44x26).png" id="1_b66pn"]
+[ext_resource type="Script" path="res://scenes/enemie_bory.gd" id="1_dn0k1"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tr2y0"]
+radius = 17.0
+height = 34.0
+
+[sub_resource type="Animation" id="Animation_rdlky"]
+resource_name = "run"
+length = 0.875006
+step = 0.0625
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimationPlayer:root_node")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.875006),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [NodePath(".."), NodePath("..")]
+}
+
+[sub_resource type="Animation" id="Animation_s7aox"]
+length = 0.875006
+step = 0.0625
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimationPlayer:root_node")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [NodePath("..")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0625, 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.4375, 0.5, 0.5625, 0.625, 0.6875, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0), Vector2i(4, 0), Vector2i(5, 0), Vector2i(6, 0), Vector2i(7, 0), Vector2i(8, 0), Vector2i(9, 0), Vector2i(10, 0), Vector2i(11, 0), Vector2i(12, 0), Vector2i(13, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xe8dg"]
+_data = {
+"RESET": SubResource("Animation_s7aox"),
+"run": SubResource("Animation_rdlky")
+}
+
+[node name="Enemie" type="Node2D"]
+
+[node name="EnemieBory" type="CharacterBody2D" parent="."]
+script = ExtResource("1_dn0k1")
+
+[node name="Sprite2D" type="Sprite2D" parent="EnemieBory"]
+texture = ExtResource("1_b66pn")
+hframes = 14
+frame = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemieBory"]
+position = Vector2(0, 4)
+shape = SubResource("CapsuleShape2D_tr2y0")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="EnemieBory"]
+libraries = {
+"": SubResource("AnimationLibrary_xe8dg")
+}

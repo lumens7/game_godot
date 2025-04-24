@@ -1,0 +1,71 @@
+[gd_scene load_steps=13 format=3 uid="uid://0d3eits6v808"]
+
+[ext_resource type="Script" path="res://scenes/fruit_random.gd" id="1_xjfch"]
+[ext_resource type="Texture2D" uid="uid://b7gn3qwwxa5om" path="res://Assets/Items/Fruits/Apple.png" id="2_5guvc"]
+[ext_resource type="Texture2D" uid="uid://ch3nobldkjkw4" path="res://Assets/Items/Fruits/Cherries.png" id="2_gmcal"]
+[ext_resource type="Texture2D" uid="uid://cwsitke50b3er" path="res://Assets/Items/Fruits/Bananas.png" id="2_rko40"]
+[ext_resource type="Texture2D" uid="uid://j3nknx1wxw5d" path="res://Assets/Items/Fruits/Kiwi.png" id="5_3n0xn"]
+[ext_resource type="Texture2D" uid="uid://c8auhjhl2wqoc" path="res://Assets/Items/Fruits/Orange.png" id="6_8ki3k"]
+[ext_resource type="Texture2D" uid="uid://bqopr07km44xq" path="res://Assets/Items/Fruits/Strawberry.png" id="7_7k5sh"]
+[ext_resource type="Texture2D" uid="uid://di0jc3idygk28" path="res://Assets/Items/Fruits/Pineapple.png" id="8_40itw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hi01s"]
+
+[sub_resource type="Animation" id="Animation_2o0et"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Apple:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_oeopm"]
+resource_name = "stop"
+length = 1.06251
+step = 0.0625
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Apple:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0625, 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.4375, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125, 0.875, 0.9375, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 16, 16]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fau6o"]
+_data = {
+"RESET": SubResource("Animation_2o0et"),
+"stop": SubResource("Animation_oeopm")
+}
+
+[node name="Fruit_random" type="Node2D"]
+script = ExtResource("1_xjfch")
+list_fruits = Array[Texture2D]([ExtResource("2_5guvc"), ExtResource("2_rko40"), ExtResource("2_gmcal"), ExtResource("5_3n0xn"), ExtResource("6_8ki3k"), ExtResource("7_7k5sh"), ExtResource("8_40itw")])
+
+[node name="Apple" type="Sprite2D" parent="."]
+texture = ExtResource("2_rko40")
+hframes = 17
+frame = 1
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_hi01s")
+
+[node name="AnimationFruit" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_fau6o")
+}
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
